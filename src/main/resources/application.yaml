@@ -1,0 +1,51 @@
+locadora:
+  title: Locadora de Carros
+  description: API para gerenciamento de alugueis de carros
+  version: @project.version@
+  endpointsPackage: com.bak.locadora.api
+
+server:
+  port: 5000
+
+logging:
+  level:
+    root: info
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'health,info'
+
+spring:
+  application:
+    name: Locadora API
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 50
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  datasource:
+    url: jdbc:postgresql://localhost:5433/locadora
+    username: postgres
+    password: postgres
+    hikari:
+      pool-name: locadora-pool
+      idle-timeout: 120000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      max-lifetime: 300000
+    type: com.zaxxer.hikari.HikariDataSource
+  jpa:
+    open-in-view: false
+    database: postgresql
+    properties:
+      hibernate.show_sql: false
+      hibernate.format_sql: false
+      hibernate.hbm2ddl.auto: update
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.temp.use_jdbc_metadata_defaults: false
+      hibernate.jdbc.time_zone: UTC
