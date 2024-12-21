@@ -8,7 +8,7 @@ CREATE TABLE car (
     created_at TIMESTAMP NOT NULL,
     color VARCHAR(255),
     brand_id BIGINT,
-    category_id BIGINT, -- Adiciona a coluna category_id
+    category_id BIGINT,
     CONSTRAINT fk_brand FOREIGN KEY (brand_id) REFERENCES brand(id),
-    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories(id) -- Define a chave estrangeira
+    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories(id)
 );

@@ -1,4 +1,3 @@
--- Cria a nova tabela imagem com a coluna car_id obrigatória
 CREATE TABLE imagem (
     id BIGSERIAL PRIMARY KEY,
     image VARCHAR(255),
