@@ -39,4 +39,5 @@ public class CarDTO {
     private Long categoryId;
 
     private String categoryName;
+
 }

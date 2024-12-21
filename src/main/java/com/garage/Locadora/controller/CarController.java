@@ -32,11 +32,11 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.OK).body(carService.findById(id));
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<CarDTO> updateCar(@PathVariable Long id, @Valid @RequestBody CarDTO carDTO) {
-//        CarDTO updateCar = carService.update(id, carDTO);
-//        return ResponseEntity.ok(updateCar);
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<CarDTO> updateCar(@PathVariable Long id, @Valid @RequestBody CarDTO carDTO) {
+        CarDTO updateCar = carService.update(id, carDTO);
+        return ResponseEntity.ok(updateCar);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCar(@PathVariable Long id) {

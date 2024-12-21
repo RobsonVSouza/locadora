@@ -13,7 +13,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,14 +32,6 @@ public class CarService {
     @Autowired
     CarMapper carMapper;
 
-//    public CarDTO save(CarDTO carDTO){
-//        Optional<Car> car = carRepository.findByLicensePlate(carDTO.getLicensePlate());
-//        if (car.isPresent()){
-//            throw new UnsupportedMathOperationException("Já foi cadastrado");
-//        }
-//        return carMapper.toDto(carRepository.save(carMapper.toEntity(carDTO)));
-//    }
-
     @Transactional
     public CarDTO save(CarDTO carDTO) {
         Optional<Car> existingCar = carRepository.findByLicensePlate(carDTO.getLicensePlate());
@@ -58,10 +49,8 @@ public class CarService {
         carEntity.setCategory(categories);
         carEntity.setBrand(brand);
 
-        // Salva a entidade no banco
         Car savedCar = carRepository.save(carEntity);
 
-        // Converte a entidade salva para DTO e retorna
         return carMapper.toDto(savedCar);
     }
 
@@ -79,22 +68,24 @@ public class CarService {
                 .orElse(null);
     }
 
-//    public CarDTO update(Long id, CarDTO carDTO) {
-//        Car existingCar = carRepository.findById(id)
-//                .orElseThrow(() -> new UnsupportedMathOperationException("Carro não encontrado com o ID: " + id));
-//
-//        carRepository.findByLicensePlate(carDTO.getLicensePlate())
-//                .filter(car -> !car.getId().equals(id))
-//                .ifPresent(car -> {
-//                    throw new UnsupportedMathOperationException("Já existe um carro com a placa: " + carDTO.getLicensePlate());
-//                });
-//
-//        carMapper.updateEntityFromDto(carDTO, existingCar);
-//
-//        Car updatedCar = carRepository.save(existingCar);
-//        return carMapper.toDto(updatedCar);
-//    }
+    @Transactional
+    public CarDTO update(Long id, CarDTO carDTO) {
+        Car existingCar = carRepository.findById(id)
+                .orElseThrow(() -> new UnsupportedMathOperationException("Carro não encontrado com o ID: " + id));
 
+        Brand brand = brandRepository.findById(carDTO.getBrandId())
+                .orElseThrow(() -> new UnsupportedMathOperationException("Marca não encontrada com o ID: " + carDTO.getBrandId()));
+
+        Categories categories = categoriesRepository.findById(carDTO.getCategoryId())
+                .orElseThrow(() -> new UnsupportedMathOperationException("Categoria não encontrada com o ID " + carDTO.getCategoryId()));
+
+        carMapper.updateEntityFromDto(carDTO, existingCar);
+        existingCar.setBrand(brand);
+        existingCar.setCategory(categories);
+
+        Car updatedCar = carRepository.save(existingCar);
+        return carMapper.toDto(updatedCar);
+    }
 
     public void delete(Long id) {
         if (!carRepository.existsById(id)) {

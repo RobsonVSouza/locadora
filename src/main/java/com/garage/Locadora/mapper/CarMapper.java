@@ -3,6 +3,7 @@ package com.garage.Locadora.mapper;
 import com.garage.Locadora.dto.CarDTO;
 import com.garage.Locadora.entity.Brand;
 import com.garage.Locadora.entity.Car;
+import com.garage.Locadora.entity.Categories;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -81,35 +82,50 @@ public abstract class CarMapper {
     @Mapping(source = "category.name", target = "categoryName")
     public abstract CarDTO toDto(Car car);
 
-    @Mapping(target = "createdAt", ignore = true) // Ignora 'createdAt'
-    @Mapping(target = "brand", ignore = true)    // Atualização manual da Brand
-    @Mapping(target = "category", ignore = true) // Atualização manual da Category
-    public abstract void updateEntityFromDto(CarDTO carDTO, @MappingTarget Car car);
+//    @Mapping(target = "createdAt", ignore = true)
+//    @Mapping(target = "brand", expression = "java(carDTO.getBrandId() != null ? new Brand(carDTO.getBrandId()) : car.getBrand())")
+//    @Mapping(target = "category", expression = "java(carDTO.getCategoryId() != null ? new Category(carDTO.getCategoryId()) : car.getCategory())")
+//    public abstract void updateEntityFromDto(CarDTO carDTO, @MappingTarget Car car);
 
-//    public void updateEntityFromDto(CarDTO carDTO, Car car) {
-//        if (carDTO == null || car == null) {
-//            throw new IllegalArgumentException("CarDTO e Car não podem ser nulos.");
-//        }
-//
-//        car.setName(carDTO.getName());
-//        car.setDescription(carDTO.getDescription());
-//        car.setDailyRate(carDTO.getDailyRate());
-//        car.setAvaliable(carDTO.getAvaliable());
-//        car.setLicensePlate(carDTO.getLicensePlate());
-//        car.setColor(carDTO.getColor());
-//
-//        // Define 'createdAt' se necessário
-//        if (carDTO.getCreatedAt() != null) {
-//            car.setCreatedAt(carDTO.getCreatedAt());
-//        } else {
-//            car.setCreatedAt(Instant.now()); // Definindo um valor padrão
-//        }
-//
-//        // Atualiza o 'brand' a partir do 'brandId'
-//        if (carDTO.getBrandId() != null) {
-//            Brand brand = new Brand(); // Aqui você pode buscar ou instanciar a Brand conforme a lógica
-//            brand.setId(carDTO.getBrandId());
-//            car.setBrand(brand);
-//        }
-//    }
+
+
+    public void updateEntityFromDto(CarDTO carDTO, Car car) {
+        if (carDTO == null || car == null) {
+            throw new IllegalArgumentException("CarDTO e Car não podem ser nulos.");
+        }
+
+        // Atualizando os campos simples
+        car.setName(carDTO.getName());
+        car.setDescription(carDTO.getDescription());
+        car.setDailyRate(carDTO.getDailyRate());
+        car.setAvaliable(carDTO.getAvaliable());
+        car.setLicensePlate(carDTO.getLicensePlate());
+        car.setColor(carDTO.getColor());
+
+        // Atualizando a data de criação
+        if (carDTO.getCreatedAt() != null) {
+            car.setCreatedAt(carDTO.getCreatedAt());
+        } else {
+            car.setCreatedAt(Instant.now()); // Define um valor padrão se o DTO não fornecer
+        }
+
+        // Atualizando a marca (Brand)
+        if (carDTO.getBrandId() != null) {
+            Brand brand = new Brand();
+            brand.setId(carDTO.getBrandId());
+            car.setBrand(brand);
+        } else {
+            car.setBrand(null); // Remove a associação, se necessário
+        }
+
+        // Atualizando a categoria (Category), se necessário
+        if (carDTO.getCategoryId() != null) {
+            Categories category = new Categories();
+            category.setId(carDTO.getCategoryId());
+            car.setCategory(category);
+        } else {
+            car.setCategory(null); // Remove a associação, se necessário
+        }
+    }
+
 }
