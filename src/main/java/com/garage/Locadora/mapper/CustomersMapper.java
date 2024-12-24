@@ -64,7 +64,6 @@ public class CustomersMapper {
             return;
         }
 
-        // Atualiza apenas os campos presentes no DTO (evita sobrescrever dados desnecessários)
         if (customersDTO.getName() != null) {
             existingCustomer.setName(customersDTO.getName());
         }

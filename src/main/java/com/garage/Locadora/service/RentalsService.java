@@ -40,7 +40,6 @@ public class RentalsService {
                 .orElse(null);
     }
 
-
     public RentalsDTO update(Long id, RentalsDTO rentalsDTO) {
         Rentals existingRentals = rentalsRepository.findById(id)
                 .orElseThrow(() -> new UnsupportedMathOperationException("Não existe o aluguel com o ID: " + id));
@@ -55,5 +54,4 @@ public class RentalsService {
         }
         rentalsRepository.deleteById(id);
     }
-
 }

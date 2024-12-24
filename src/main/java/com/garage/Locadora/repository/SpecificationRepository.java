@@ -9,6 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface SpecificationRepository extends JpaRepository <Specification,Long> {
-
     Optional<Specification> findByName(String name);
 }

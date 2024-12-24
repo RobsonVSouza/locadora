@@ -17,5 +17,4 @@ public abstract class SpecificationMapper {
     @Mapping(target = "createdAt", ignore = true)
     public abstract void updateEntityFromDto(SpecificationDTO specificationDTO, @MappingTarget Specification specification);
 
-
 }

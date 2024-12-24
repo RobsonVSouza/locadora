@@ -29,12 +29,6 @@ public class CustomersService {
         return customersMapper.toDto(customersRepository.save(customersMapper.toEntity(customersDTO)));
     }
 
-//    public CustomersDTO save(CustomersDTO customersDTO){
-//        Customers customers = customersMapper.toEntity(customersDTO);
-//        Customers saveCustomers = customersRepository.save(customers);
-//        return customersMapper.toDto(saveCustomers);
-//    }
-
     public List<CustomersDTO> findAll() {
         List<Customers> customers = customersRepository.findAll();
         return customers.stream()

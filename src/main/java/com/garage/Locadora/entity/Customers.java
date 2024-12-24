@@ -48,13 +48,13 @@ public class Customers implements Serializable{
     @PrePersist
     public void prePersist() {
         Instant now = Instant.now();
-        this.createdAt = now; // Configura createdAt no momento da criação
-        this.updatedAt = now; // Configura updatedAt no momento da criação
+        this.createdAt = now;
+        this.updatedAt = now;
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = Instant.now(); // Atualiza updatedAt sempre que a entidade for modificada
+        this.updatedAt = Instant.now();
     }
 
 }

@@ -88,11 +88,13 @@ public class CarService {
     }
 
     public void delete(Long id) {
-        if (!carRepository.existsById(id)) {
-            throw new UnsupportedMathOperationException("Carro não encontrado com o ID: " + id);
-        }
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new UnsupportedMathOperationException("Carro não encontrado com o ID: " + id));
+
+        car.setBrand(null);
+        car.setCategory(null);
+        carRepository.save(car);
+
         carRepository.deleteById(id);
     }
-
-
 }

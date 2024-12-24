@@ -39,7 +39,6 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity<>(exceptionsResponse, HttpStatus.BAD_REQUEST);
     }
 
-    // Método para tratar validações (substituindo o método padrão)
     public ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers,
             HttpStatus status, WebRequest request) {
