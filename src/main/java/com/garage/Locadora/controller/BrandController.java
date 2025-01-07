@@ -27,6 +27,11 @@ public class BrandController {
         return brandService.findAll();
     }
 
+    @GetMapping("/{brandId}/cars")
+    public BrandDTO getCarsByBrand(@PathVariable Long brandId) {
+        return brandService.findBrandWithCars(brandId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<BrandDTO> findById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(brandService.findById(id));
