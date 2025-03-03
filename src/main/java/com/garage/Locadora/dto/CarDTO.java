@@ -23,7 +23,7 @@ public class CarDTO {
     private BigDecimal dailyRate;
 
     @Min(value = 1, message = "Avaliable must be at least 1")
-    @Max(value = 5, message = "Avaliable cannot exceed 5")
+    @Max(value = 7, message = "Avaliable cannot exceed 5")
     private int avaliable;
 
     private String licensePlate;
