@@ -33,7 +33,7 @@ public class Car implements Serializable {
     private BigDecimal dailyRate;
 
     @Min(1)
-    @Max(7)
+    @Max(5)
     private int avaliable = 1;
 
     private String licensePlate;
